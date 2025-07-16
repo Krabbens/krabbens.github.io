@@ -1,17 +1,34 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Preloader } from '@/components/Preloader'
+import { CustomCursor } from '@/components/CustomCursor'
+import { Navigation } from '@/components/Navigation'
+import { Hero } from '@/components/Hero'
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  const handlePreloaderComplete = () => {
+    setIsLoading(false)
+  }
+
   return (
     <main className="relative min-h-screen bg-dark">
+      <AnimatePresence>
+        {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
+      </AnimatePresence>
+
+      {!isLoading && <CustomCursor />}
+
       <motion.div
-        className="p-8"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        style={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="text-muted">Kosma Gąsiorowski — portfolio shell</p>
+        <Navigation />
+        <Hero />
       </motion.div>
     </main>
   )
