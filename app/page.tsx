@@ -6,6 +6,9 @@ import { Preloader } from '@/components/Preloader'
 import { CustomCursor } from '@/components/CustomCursor'
 import { Navigation } from '@/components/Navigation'
 import { Hero } from '@/components/Hero'
+import { About } from '@/components/About'
+import { Experience } from '@/components/Experience'
+import { Projects } from '@/components/Projects'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -29,6 +32,9 @@ export default function Home() {
       >
         <Navigation />
         <Hero />
+        <About />
+        <Experience />
+        <Projects />
       </motion.div>
     </main>
   )
