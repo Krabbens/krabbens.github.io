@@ -139,11 +139,12 @@ const spaceGrotesk = Space_Grotesk({ ... })
 
 ### GitHub Pages (`krabbens.github.io`)
 
-This site uses Next.js **static export** (`out/`). On push to `main`, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and deploys via GitHub Actions.
+This site uses Next.js **static export** (`out/`). On push to `main`, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and publishes the `out/` folder to the **`gh-pages`** branch.
 
 1. Create the user site repo `krabbens.github.io` and push this project as `main`.
-2. In the repo **Settings → Pages**, set **Source** to **GitHub Actions**.
-3. After the first workflow run, the site is available at **https://krabbens.github.io/**.
+2. In the repo **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.  
+   (If you previously chose **GitHub Actions** as the source, switch to **Deploy from a branch** so it matches this workflow.)
+3. After the first successful workflow run, the site is available at **https://krabbens.github.io/**.
 
 ### Vercel
 
