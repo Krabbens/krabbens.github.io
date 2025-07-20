@@ -46,7 +46,8 @@ function OrbitItem({
   reverse?: boolean
   pillClassName: string
 }) {
-  const angle = useMotionValue(0)
+  const startRad = (phaseDeg * Math.PI) / 180
+  const angle = useMotionValue(startRad)
 
   useEffect(() => {
     const start = (phaseDeg * Math.PI) / 180
@@ -64,16 +65,16 @@ function OrbitItem({
   const y = useTransform(angle, (a) => Math.sin(a) * radiusPx)
 
   return (
-    <motion.div
-      className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 select-none"
-      style={{ x, y }}
-    >
-      <div
-        className={`${pillClassName} whitespace-nowrap pointer-events-none shadow-md shadow-black/30`}
-      >
-        {label}
-      </div>
-    </motion.div>
+    // Anchor at orbit center (0×0). Framer x/y must NOT share the same node as Tailwind translate-* (they fight over transform).
+    <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-0 w-0 overflow-visible select-none">
+      <motion.div className="absolute left-0 top-0 will-change-transform" style={{ x, y }}>
+        <div
+          className={`${pillClassName} -translate-x-1/2 -translate-y-1/2 whitespace-nowrap shadow-md shadow-black/30`}
+        >
+          {label}
+        </div>
+      </motion.div>
+    </div>
   )
 }
 
@@ -178,44 +179,25 @@ export function Skills() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <div className="relative aspect-square max-w-2xl mx-auto">
-            {/* Center Circle */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <motion.div
-                className="w-32 h-32 rounded-full bg-gradient-to-br from-accent-blue via-accent-cyan to-accent-purple flex items-center justify-center"
-                animate={{
-                  boxShadow: [
-                    '0 0 60px rgba(59, 130, 246, 0.3)',
-                    '0 0 100px rgba(139, 92, 246, 0.3)',
-                    '0 0 60px rgba(59, 130, 246, 0.3)',
-                  ],
-                }}
-                transition={{ duration: 5, repeat: Infinity }}
-              >
-                <span className="text-white font-display font-bold text-xl select-none">
-                  Full Stack
-                </span>
-              </motion.div>
-            </div>
-
-            {/* Orbital ring guides */}
+            {/* Orbital ring guides (behind tags) */}
             <motion.div
-              className="absolute inset-0 border border-accent-blue/20 rounded-full pointer-events-none"
+              className="absolute inset-0 z-0 border border-accent-blue/20 rounded-full pointer-events-none"
               animate={{ rotate: 360 }}
               transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
             />
             <motion.div
-              className="absolute inset-8 border border-accent-cyan/20 rounded-full pointer-events-none"
+              className="absolute inset-8 z-0 border border-accent-cyan/20 rounded-full pointer-events-none"
               animate={{ rotate: -360 }}
               transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
             />
             <motion.div
-              className="absolute inset-16 border border-accent-purple/20 rounded-full pointer-events-none"
+              className="absolute inset-16 z-0 border border-accent-purple/20 rounded-full pointer-events-none"
               animate={{ rotate: 360 }}
               transition={{ duration: 70, repeat: Infinity, ease: 'linear' }}
             />
 
-            {/* Tags on true circular paths (smooth angle animation) */}
-            <div className="absolute inset-0">
+            {/* Tags between rings and hub */}
+            <div className="absolute inset-0 z-[5]">
               {['C++', 'Python', 'CUDA', 'SQL'].map((skill, i) => (
                 <OrbitItem
                   key={skill}
@@ -247,6 +229,25 @@ export function Skills() {
                   pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-purple/30 text-accent-purple text-sm font-medium"
                 />
               ))}
+            </div>
+
+            {/* Center hub on top so labels never cover the title */}
+            <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+              <motion.div
+                className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-accent-blue via-accent-cyan to-accent-purple"
+                animate={{
+                  boxShadow: [
+                    '0 0 60px rgba(59, 130, 246, 0.3)',
+                    '0 0 100px rgba(139, 92, 246, 0.3)',
+                    '0 0 60px rgba(59, 130, 246, 0.3)',
+                  ],
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+              >
+                <span className="text-white font-display font-bold text-xl select-none">
+                  Full Stack
+                </span>
+              </motion.div>
             </div>
           </div>
         </motion.div>
