@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion'
-import { useRef, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import { skills } from '@/lib/data'
 import { FiCode, FiLayers, FiTrendingUp } from 'react-icons/fi'
 
@@ -30,51 +30,47 @@ const categoryConfig = {
   },
 }
 
-/** True circular motion: angle runs linearly; x/y follow cos/sin (no straight segments between vertices). */
+/**
+ * CSS rotate → translateX → counter-rotate.
+ * The wrapper shares the exact same `inset-*` as the visible ring guide,
+ * so the pill traces the **same** circle regardless of container size.
+ */
 function OrbitItem({
   label,
   phaseDeg,
-  radiusPx,
+  orbitInset,
   durationSec,
   reverse,
   pillClassName,
 }: {
   label: string
   phaseDeg: number
-  radiusPx: number
+  orbitInset: string
   durationSec: number
   reverse?: boolean
   pillClassName: string
 }) {
-  const startRad = (phaseDeg * Math.PI) / 180
-  const angle = useMotionValue(startRad)
-
-  useEffect(() => {
-    const start = (phaseDeg * Math.PI) / 180
-    angle.set(start)
-    const delta = reverse ? -Math.PI * 2 : Math.PI * 2
-    const controls = animate(angle, start + delta, {
-      duration: durationSec,
-      repeat: Infinity,
-      ease: 'linear',
-    })
-    return () => controls.stop()
-  }, [angle, phaseDeg, durationSec, reverse])
-
-  const x = useTransform(angle, (a) => Math.cos(a) * radiusPx)
-  const y = useTransform(angle, (a) => Math.sin(a) * radiusPx)
+  const dir = reverse ? -1 : 1
+  const end = phaseDeg + dir * 360
 
   return (
-    // Anchor at orbit center (0×0). Framer x/y must NOT share the same node as Tailwind translate-* (they fight over transform).
-    <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-0 w-0 overflow-visible select-none">
-      <motion.div className="absolute left-0 top-0 will-change-transform" style={{ x, y }}>
-        <div
-          className={`${pillClassName} -translate-x-1/2 -translate-y-1/2 whitespace-nowrap shadow-md shadow-black/30`}
-        >
+    <motion.div
+      className={`absolute ${orbitInset} rounded-full pointer-events-none select-none`}
+      initial={{ rotate: phaseDeg }}
+      animate={{ rotate: end }}
+      transition={{ duration: durationSec, repeat: Infinity, ease: 'linear' }}
+    >
+      <motion.div
+        className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-10"
+        initial={{ rotate: -phaseDeg }}
+        animate={{ rotate: -end }}
+        transition={{ duration: durationSec, repeat: Infinity, ease: 'linear' }}
+      >
+        <div className={`${pillClassName} whitespace-nowrap shadow-md shadow-black/30`}>
           {label}
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -196,40 +192,40 @@ export function Skills() {
               transition={{ duration: 70, repeat: Infinity, ease: 'linear' }}
             />
 
-            {/* Tags between rings and hub */}
-            <div className="absolute inset-0 z-[5]">
-              {['C++', 'Python', 'CUDA', 'SQL'].map((skill, i) => (
-                <OrbitItem
-                  key={skill}
-                  label={skill}
-                  phaseDeg={i * 90}
-                  radiusPx={248}
-                  durationSec={110}
-                  pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-blue/30 text-accent-blue text-sm font-medium"
-                />
-              ))}
-              {['PyQt5', 'Pandas', 'Qt', 'ML'].map((skill, i) => (
-                <OrbitItem
-                  key={skill}
-                  label={skill}
-                  phaseDeg={45 + i * 90}
-                  radiusPx={168}
-                  durationSec={85}
-                  reverse
-                  pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-cyan/30 text-accent-cyan text-sm font-medium"
-                />
-              ))}
-              {['IoT', 'LLMOps', 'Data Analysis', 'Salesforce'].map((skill, i) => (
-                <OrbitItem
-                  key={skill}
-                  label={skill}
-                  phaseDeg={22.5 + i * 90}
-                  radiusPx={104}
-                  durationSec={62}
-                  pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-purple/30 text-accent-purple text-sm font-medium"
-                />
-              ))}
-            </div>
+            {/* Outer orbit — same inset-0 as outer ring */}
+            {['C++', 'Python', 'CUDA', 'SQL'].map((skill, i) => (
+              <OrbitItem
+                key={skill}
+                label={skill}
+                phaseDeg={i * 90}
+                orbitInset="inset-0"
+                durationSec={110}
+                pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-blue/30 text-accent-blue text-sm font-medium"
+              />
+            ))}
+            {/* Middle orbit — same inset-8 as middle ring */}
+            {['PyQt5', 'Pandas', 'Qt', 'ML'].map((skill, i) => (
+              <OrbitItem
+                key={skill}
+                label={skill}
+                phaseDeg={45 + i * 90}
+                orbitInset="inset-8"
+                durationSec={85}
+                reverse
+                pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-cyan/30 text-accent-cyan text-sm font-medium"
+              />
+            ))}
+            {/* Inner orbit — same inset-16 as inner ring */}
+            {['IoT', 'LLMOps', 'Data Analysis', 'Salesforce'].map((skill, i) => (
+              <OrbitItem
+                key={skill}
+                label={skill}
+                phaseDeg={22.5 + i * 90}
+                orbitInset="inset-16"
+                durationSec={62}
+                pillClassName="skill-tag px-4 py-2 rounded-full bg-dark-card border border-accent-purple/30 text-accent-purple text-sm font-medium"
+              />
+            ))}
 
             {/* Center hub on top so labels never cover the title */}
             <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
