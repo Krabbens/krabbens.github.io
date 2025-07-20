@@ -91,7 +91,7 @@ export function Contact() {
             </p>
 
             {/* Contact Details */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* Email */}
               <MagneticButton>
                 <a

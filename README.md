@@ -198,7 +198,7 @@ This project is open source and available for personal use.
 
 ## 🤝 Contact
 
-- **Email:** osukuose@gmail.com
+- **Email:** kosma.gasiorowski@proton.me
 - **LinkedIn:** [kosma-gąsiorowski-3a139b239](https://linkedin.com/in/kosma-gąsiorowski-3a139b239)
 - **Location:** Poznań, Poland
 

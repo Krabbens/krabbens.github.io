@@ -59,7 +59,7 @@ export const personalInfo: PersonalInfo = {
   name: 'Kosma Gąsiorowski',
   tagline: 'CS, IoT @ PUT',
   location: 'Poznań, Wielkopolskie, Poland',
-  email: 'osukuose@gmail.com',
+  email: 'kosma.gasiorowski@proton.me',
   linkedin: 'kosma-gąsiorowski-3a139b239',
   initials: 'KG',
 }
