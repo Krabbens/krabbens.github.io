@@ -156,15 +156,22 @@ export const skills: Skill[] = [
   // Languages
   { name: 'C++20', category: 'languages' },
   { name: 'Python', category: 'languages' },
+  { name: 'JavaScript', category: 'languages' },
+  { name: 'TypeScript', category: 'languages' },
   { name: 'SQL', category: 'languages' },
   { name: 'CUDA', category: 'languages' },
   // Frameworks
+  { name: 'React', category: 'frameworks' },
+  { name: 'Next.js', category: 'frameworks' },
+  { name: 'Angular', category: 'frameworks' },
+  { name: 'Vue', category: 'frameworks' },
   { name: 'PyQt5', category: 'frameworks' },
   { name: 'Qt', category: 'frameworks' },
   { name: 'Pandas', category: 'frameworks' },
   { name: 'Matplotlib', category: 'frameworks' },
   { name: 'Salesforce', category: 'frameworks' },
   // Areas
+  { name: 'Web Development', category: 'areas' },
   { name: 'Data Analysis', category: 'areas' },
   { name: 'LLMOps', category: 'areas' },
   { name: 'Machine Learning', category: 'areas' },
@@ -203,8 +210,9 @@ export const stats = [
 
 // Tech stack for marquee
 export const techStackMarquee = [
-  'C++20', 'CUDA', 'Python', 'PyQt5', 'SQL', 'Pandas', 
-  'Matplotlib', 'Salesforce', 'LLMOps', 'Machine Learning', 
+  'TypeScript', 'JavaScript', 'React', 'Next.js', 'Angular', 'Vue',
+  'C++20', 'CUDA', 'Python', 'PyQt5', 'SQL', 'Pandas',
+  'Matplotlib', 'Salesforce', 'LLMOps', 'Machine Learning',
   'IoT', 'Qt', 'QML', 'Apex', 'LWC',
 ]
 
