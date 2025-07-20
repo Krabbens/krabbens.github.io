@@ -17,7 +17,7 @@ export function Hero() {
   const lastName = personalInfo.name.split(' ').slice(1).join(' ')
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden overflow-y-visible">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 grid-pattern opacity-50" />
 
@@ -83,13 +83,13 @@ export function Hero() {
 
         {/* Name - Split into two lines */}
         <motion.h1
-          className="font-display font-bold text-display-lg gradient-text mb-4 md:mb-6"
+          className="font-display font-bold text-display-lg gradient-text mb-4 md:mb-6 pb-1 md:pb-2 [overflow:visible]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
           <motion.span
-            className="block"
+            className="block [overflow:visible]"
             initial={{ y: 150, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
@@ -101,7 +101,7 @@ export function Hero() {
             {firstName}
           </motion.span>
           <motion.span
-            className="block"
+            className="block [overflow:visible] pb-0.5"
             initial={{ y: 150, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{

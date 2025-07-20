@@ -32,7 +32,8 @@ const config: Config = {
       fontSize: {
         'display-xs': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         'display-sm': ['clamp(4rem, 12vw, 8rem)', { lineHeight: '1', letterSpacing: '-0.03em' }],
-        'display-lg': ['clamp(6rem, 18vw, 12rem)', { lineHeight: '0.9', letterSpacing: '-0.04em' }],
+        // 1.08 leaves room for Polish diacritics (ą, ę, ó, etc.) below the cap height
+        'display-lg': ['clamp(6rem, 18vw, 12rem)', { lineHeight: '1.08', letterSpacing: '-0.04em' }],
       },
       animation: {
         'spin-slow': 'spin 20s linear infinite',
