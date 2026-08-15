@@ -1,70 +1,44 @@
-import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
-import { Providers } from './providers'
-import { personalInfo } from '@/lib/data'
-import './globals.css'
-
-// Google Fonts configuration
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
+import type { Metadata } from "next";
+import { DM_Mono, Instrument_Serif, Space_Grotesk } from "next/font/google";
+import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-})
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
 
-// Metadata for SEO
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: "400",
+});
+
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
 export const metadata: Metadata = {
-  title: `${personalInfo.name} — Portfolio`,
-  description: `${personalInfo.tagline} — Computer Science & IoT Engineer. Portfolio showcasing projects, experience, and skills in software development, machine learning, and IoT.`,
-  keywords: [
-    'Kosma Gąsiorowski',
-    'Portfolio',
-    'Computer Science',
-    'IoT',
-    'Software Developer',
-    'Machine Learning',
-    'C++',
-    'Python',
-    'Salesforce',
-  ],
-  authors: [{ name: personalInfo.name }],
-  creator: personalInfo.name,
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://kosmagasiorowski.com',
-    title: `${personalInfo.name} — Portfolio`,
-    description: `${personalInfo.tagline} — Computer Science & IoT Engineer`,
-    siteName: `${personalInfo.name} Portfolio`,
+  title: "Kosma Gąsiorowski — Full Stack Developer",
+  description: "Portfolio of Kosma Gąsiorowski: full stack developer, systems thinker, and builder of useful weird things.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${personalInfo.name} — Portfolio`,
-    description: `${personalInfo.tagline} — Computer Science & IoT Engineer`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
-        <Providers>
-          {children}
-        </Providers>
+    <html lang="en">
+      <body className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${dmMono.variable}`}>
+        {children}
       </body>
     </html>
-  )
+  );
 }

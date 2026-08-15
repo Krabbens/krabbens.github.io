@@ -1,207 +1,98 @@
-# Kosma Gąsiorowski — Portfolio
+# vinext-starter
 
-Modern portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion. Designed with an Awwwards-level aesthetic featuring smooth animations, custom cursor, horizontal scroll sections, and glassmorphism effects.
+A clean full-stack starter running on
+[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
+Drizzle support.
 
-![Portfolio Preview](./public/og-image.png)
+## Prerequisites
 
-## ✨ Features
+- Node.js `>=22.13.0`
 
-- **Preloader Animation** — Animated loading screen with counter and name reveal
-- **Custom Cursor** — Magnetic cursor with hover states (disabled on touch devices)
-- **Smooth Scroll** — Lenis smooth scroll integration
-- **Dark/Light Mode** — Theme toggle with next-themes
-- **Horizontal Scroll Projects** — Scroll-driven horizontal project showcase
-- **Magnetic Buttons** — Buttons that follow cursor movement
-- **Text Reveal Animations** — Stagger text animations on scroll
-- **Parallax Effects** — Multi-layer parallax on hero and about sections
-- **Glassmorphism** — Frosted glass UI elements
-- **Noise Texture Overlay** — Subtle grain effect for premium feel
-- **Fully Responsive** — Mobile-first design from 320px to 4K
-- **Accessibility** — Semantic HTML, ARIA labels, keyboard navigation, reduced motion support
-
-## 🛠️ Tech Stack
-
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Animations:** Framer Motion
-- **Smooth Scroll:** Lenis
-- **Icons:** React Icons
-- **Theme:** next-themes
-- **Fonts:** Inter (body), Space Grotesk (display)
-
-## 📦 Setup
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-
-1. **Clone or navigate to the project directory**
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Run development server:**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser:**
-   ```
-   http://localhost:3000
-   ```
-
-5. **Build for production:**
-   ```bash
-   npm run build
-   npm start
-   ```
-
-## 📁 Project Structure
-
-```
-portfolio/
-├── app/
-│   ├── layout.tsx          # Root layout with fonts and providers
-│   ├── page.tsx            # Main page component
-│   ├── globals.css         # Global styles and Tailwind
-│   └── providers.tsx       # Context providers (Lenis, Theme)
-├── components/
-│   ├── Preloader.tsx       # Loading screen animation
-│   ├── CustomCursor.tsx    # Magnetic custom cursor
-│   ├── Navigation.tsx      # Sticky navbar with mobile menu
-│   ├── Hero.tsx            # Hero section with parallax
-│   ├── About.tsx           # About section with stats
-│   ├── Experience.tsx      # Work experience timeline
-│   ├── Projects.tsx        # Horizontal scroll projects
-│   ├── Skills.tsx          # Skills grid and orbital layout
-│   ├── Education.tsx       # Education cards
-│   ├── Achievements.tsx    # Awards and recognition
-│   ├── Contact.tsx         # Contact form and info
-│   ├── Footer.tsx          # Footer with social links
-│   ├── Marquee.tsx         # Scrolling tech stack ticker
-│   ├── MagneticButton.tsx  # Magnetic hover button wrapper
-│   └── NoiseTexture.tsx    # Grain overlay component
-├── lib/
-│   └── data.ts             # All CV data in TypeScript
-├── public/                 # Static assets
-├── tailwind.config.ts      # Tailwind configuration
-├── tsconfig.json           # TypeScript configuration
-├── next.config.js          # Next.js configuration
-└── package.json            # Dependencies and scripts
-```
-
-## 🎨 Customization
-
-### Update Personal Information
-
-Edit `lib/data.ts` to update:
-- Personal info (name, email, LinkedIn)
-- Work experience
-- Projects
-- Education
-- Skills
-- Achievements
-
-### Colors
-
-Modify `tailwind.config.ts` to change the color palette:
-
-```typescript
-colors: {
-  dark: {
-    DEFAULT: '#0a0a0a',
-    lighter: '#111111',
-  },
-  accent: {
-    blue: '#3b82f6',
-    cyan: '#06b6d4',
-    purple: '#8b5cf6',
-  },
-}
-```
-
-### Fonts
-
-Change fonts in `app/layout.tsx`:
-
-```typescript
-const inter = Inter({ ... })
-const spaceGrotesk = Space_Grotesk({ ... })
-```
-
-## 🚀 Deployment
-
-### GitHub Pages (`krabbens.github.io`)
-
-This site uses Next.js **static export** (`out/`). On push to `main`, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and publishes the `out/` folder to the **`gh-pages`** branch.
-
-1. Create the user site repo `krabbens.github.io` and push this project as `main`.
-2. In the repo **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.  
-   (If you previously chose **GitHub Actions** as the source, switch to **Deploy from a branch** so it matches this workflow.)
-3. After the first successful workflow run, the site is available at **https://krabbens.github.io/**.
-
-### Vercel
-
-1. Push code to GitHub
-2. Import project in Vercel
-3. Deploy (automatic builds on push)
-
-### Other platforms
+## Quick Start
 
 ```bash
+npm install
+npm run dev
 npm run build
 ```
 
-Upload the contents of the `out/` directory to any static host.
+This starter does not use `wrangler.jsonc`.
 
-## 📱 Responsive Breakpoints
+## Included Shape
 
-- **Mobile:** < 640px
-- **Tablet:** 640px - 1024px
-- **Desktop:** 1024px - 1280px
-- **Large Desktop:** > 1280px
+- edit site code under `app/`
+- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
+- `vite.config.ts` simulates declared bindings for local development
+- `db/schema.ts` starts intentionally empty
+- `examples/d1/` contains an optional D1 example surface
+- `drizzle.config.ts` supports local migration generation when needed
 
-## ♿ Accessibility
+## Workspace Auth Headers
 
-- Semantic HTML throughout
-- ARIA labels on interactive elements
-- Keyboard navigation support
-- Focus states on all interactive elements
-- `prefers-reduced-motion` support
-- WCAG AA color contrast
+OpenAI workspace sites can read the current user's email from
+`oai-authenticated-user-email`.
 
-## 🎯 Performance Optimizations
+SIWC-authenticated workspace sites may also receive
+`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
+`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
+`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
 
-- Server Components where possible
-- Client Components only for interactivity
-- Lazy loading with dynamic imports
-- Optimized font loading with `next/font`
-- CSS-only animations where possible
-- Efficient re-renders with React.memo patterns
+Treat the full name as optional and fall back to email when it is absent:
 
-## 🎨 Design Inspirations
+```tsx
+import { headers } from "next/headers";
 
-- Awwwards winning portfolios
-- Dribbble trending designs
-- Behance featured work
-- Modern SaaS landing pages
+export default async function Home() {
+  const requestHeaders = await headers();
+  const email = requestHeaders.get("oai-authenticated-user-email");
+  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
+  const fullName =
+    encodedFullName &&
+    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
+      "percent-encoded-utf-8"
+      ? decodeURIComponent(encodedFullName)
+      : null;
 
-## 📄 License
+  const displayName = fullName ?? email;
+  // ...
+}
+```
 
-This project is open source and available for personal use.
+## Optional Dispatch-Owned ChatGPT Sign-In
 
-## 🤝 Contact
+Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
+optional or required ChatGPT sign-in:
 
-- **Email:** kosma.gasiorowski@proton.me
-- **LinkedIn:** [kosma-gąsiorowski-3a139b239](https://linkedin.com/in/kosma-gąsiorowski-3a139b239)
-- **Location:** Poznań, Poland
+- Use `getChatGPTUser()` for optional signed-in UI.
+- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
+  anonymous visitors through Sign in with ChatGPT.
+- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
+  browser links or actions.
+- Pass a same-origin relative `returnTo` path for the destination after sign-in
+  or sign-out. The helper validates and safely encodes it.
+- Mark protected pages with `export const dynamic = "force-dynamic"` because
+  they depend on per-request identity headers.
 
----
+Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
+OAuth cookies, and identity header injection. Do not implement app routes for
+those reserved paths. Routes that do not import and call the helper remain
+anonymous-compatible.
 
-Built with ❤️ by Kosma Gąsiorowski
+SIWC establishes identity only; it does not prove workspace membership. Use the
+Sites hosting platform's access policy controls for workspace-wide restrictions,
+or enforce explicit server-side membership or allowlist checks.
+
+Use SIWC for account pages, user-specific dashboards, saved records, and write
+actions tied to the current ChatGPT user. Leave public content anonymous.
+
+## Useful Commands
+
+- `npm run dev`: start local development
+- `npm run build`: verify the vinext build output
+- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm run db:generate`: generate Drizzle migrations after schema changes
+
+## Learn More
+
+- [vinext Documentation](https://github.com/cloudflare/vinext)
+- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
